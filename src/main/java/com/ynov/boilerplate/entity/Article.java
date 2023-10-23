@@ -1,5 +1,8 @@
 package com.ynov.boilerplate.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "article")
 public class Article {
 
     private int id;
