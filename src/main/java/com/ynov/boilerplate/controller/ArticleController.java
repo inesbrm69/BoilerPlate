@@ -1,29 +1,33 @@
 package com.ynov.boilerplate.controller;
 
 import com.ynov.boilerplate.entity.Article;
+import com.ynov.boilerplate.services.ArticleService;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/articles")
 public class ArticleController {
     private static final Logger log = LoggerFactory.getLogger(ArticleController.class);
+    private final ArticleService articleService;
+
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<Article>> articles(){
-        log.info(" liste article ");
+        log.info(" -----> : tous les articles ");
+        List<Article> articles = articleService.getAllArticle();
         return new ResponseEntity<List<Article>>(articles, HttpStatus.OK);
     }
-    @GetMapping("{id}")
+    /*@GetMapping("{id}")
     public ResponseEntity<Article> articles(@PathVariable("id") int id){
         log.info(" article ");
         Article art = articles.stream().filter(article -> id == article.getId()).findAny().orElse(null);
@@ -80,5 +84,5 @@ public class ArticleController {
         }
 
         return new ResponseEntity<Article>(article, HttpStatus.OK);
-    }
+    }*/
 }
