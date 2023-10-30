@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class ArticleService {
+    private final ArticleRepository articleRepository;
+
     @Autowired
-    ArticleRepository articleRepository;
+    public ArticleService(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
 
     public void createUser(List<Article> art){
         articleRepository.saveAll(art);

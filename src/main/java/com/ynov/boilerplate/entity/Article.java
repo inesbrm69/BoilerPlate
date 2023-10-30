@@ -1,10 +1,11 @@
 package com.ynov.boilerplate.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "article")
 public class Article {
-
+    @Id
     private int id;
     private String name;
     private int price;
