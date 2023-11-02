@@ -17,7 +17,7 @@ public class ArticleService {
         this.articleRepository = articleRepository;
     }
 
-    public void createUser(List<Article> art){
+    public void createArticle(List<Article> art){
         articleRepository.saveAll(art);
     }
 
@@ -29,15 +29,15 @@ public class ArticleService {
         return articles;*/
         return articleRepository.findAll();
     }
-    public Optional<Article> findUserbyId(int id){
+    public Optional<Article> findArticlebyId(int id){
         return articleRepository.findById(id);
     }
 
-    public void deleteUserById(int id){
+    public void deleteArticleById(int id){
         articleRepository.deleteById(id);
     }
 
-    public void updateUser(Article art){
+    public void updateArticle(Article art){
         articleRepository.save(art);
     }
 }
