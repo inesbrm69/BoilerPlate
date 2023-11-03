@@ -30,11 +30,11 @@ public class ArticleService {
         log.info("Récupération de tous les articles : " + articles);
         return articles;
     }
-    public Optional<Article> findArticlebyId(int id){
+    public Optional<Article> findArticlebyId(String id){
         return articleRepository.findById(id);
     }
 
-    public void deleteArticleById(int id){
+    public void deleteArticleById(String id){
         articleRepository.deleteById(id);
     }
 

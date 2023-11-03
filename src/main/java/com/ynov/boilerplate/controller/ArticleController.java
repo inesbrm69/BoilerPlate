@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/articles")
+@RequestMapping(value = "/api/v1/articles")
 public class ArticleController {
     private static final Logger log = LoggerFactory.getLogger(ArticleController.class);
     private final ArticleService articleService;

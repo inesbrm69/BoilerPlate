@@ -27,7 +27,6 @@ import java.util.List;
 @Document(collection = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String firstname;
     private String lastname;
