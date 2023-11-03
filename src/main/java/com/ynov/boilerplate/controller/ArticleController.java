@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,10 +44,10 @@ public class ArticleController {
     }
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<? extends Object> addArticle(@RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
-        log.info(" list article ");
+        log.info(" Création d'articles ");
         articleService.createArticle(article);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return new ResponseEntity<Article>(article, HttpStatus.OK);
+            return new ResponseEntity<String>("L'article a bien été créé : " + article, HttpStatus.OK);
         } else {
             return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
         }
@@ -64,6 +63,33 @@ public class ArticleController {
         }
 
     }
+
+    @DeleteMapping("delete/{id:\\d+}")
+    public ResponseEntity<? extends Object> deleteArticle(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader) {
+        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+            articleService.deleteArticleById(id);
+            return new ResponseEntity<String>("L'article a bien été supprimé", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("L'article n'a pas été supprimé. Veuillez réessayer !", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    /*@DeleteMapping("delete/{id:\\d+}")
+    public ResponseEntity<? extends Object> deleteArticle(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader) {
+        List<Article> articles = articleService.getAllArticle();
+        *//*articleService.findArticlebyId(id)t*//*
+        if (id < 0 || id >= articles.size()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Article articleToDelete = articles.remove(id);
+
+        if (articleToDelete != null && authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<String>("L'article a bien été supprimé", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("L'article n'a pas été supprimé. Veuillez réessayer !",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
 
     /*@DeleteMapping("delete/{id:\\d+}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("id") int id) {
