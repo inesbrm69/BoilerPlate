@@ -23,7 +23,7 @@ public class ArticleService {
     }
 
     public Article createArticle(Article art){
-        art.setId(sequenceGeneratorService.getNextSequence("user_ sequence"));
+        art.setId(sequenceGeneratorService.getNextSequence("article_sequence"));
         return articleRepository.save(art);
     }
 
@@ -34,6 +34,12 @@ public class ArticleService {
     }
     public Article findArticlebyId(int id) {
         return articleRepository.findById(id).orElse(null);
+    }
+
+    public Article findArticlebyIdAndName(int id, String name) {
+        return articleRepository
+                .findById(id)
+                .orElse(null);
     }
 
 

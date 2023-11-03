@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        user.setId(sequenceGeneratorService.getNextSequence("user_ sequence"));
+        user.setId(sequenceGeneratorService.getNextSequence("user_sequence"));
         return userRepository.save(user);
     }
 

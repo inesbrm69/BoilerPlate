@@ -14,14 +14,13 @@ import javax.persistence.Transient;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Article")
 public class Article {
 
     @Transient
-    private static final String SEQUENCE_NAME ="user_sequence";
+    private static final String SEQUENCE_NAME ="article_sequence";
 
     @Id
     private int id;
