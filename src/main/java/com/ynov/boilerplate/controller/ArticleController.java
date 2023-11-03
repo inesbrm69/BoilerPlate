@@ -87,47 +87,4 @@ public class ArticleController {
         }
     }
 
-    /*@DeleteMapping("delete/{id:\\d+}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable("id") int id) {
-        // Vérifiez si l'ID est dans la plage valide des indices de la liste
-        if (id < 0 || id >= articles.size()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        // Supprimez l'article de la liste (ou de la base de données, si utilisée)
-        Article articleToDelete = articles.remove(id);
-
-        if (articleToDelete != null) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Ou un autre code d'erreur approprié
-        }
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Article> addArticle(@RequestBody Article article){
-        log.info(" list article ");
-        article.setId((int)new Date().getTime());
-        articles.add(article);
-
-        return new ResponseEntity<Article>(article, HttpStatus.OK);
-    }
-
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)//Put => la modification
-    public ResponseEntity<Article> updateArticle(@RequestBody Article article){ //RequestBody => dans le body
-        log.info(" list article ");
-
-        article.setId((int)new Date().getTime());
-        articles.add(article);
-
-        Article art = articles.stream().filter(myArticle -> article.getId() == myArticle.getId())
-                .findAny()
-                .orElse(null);
-
-        if(art!=null){
-            art.setNom(article.getNom());
-        }
-
-        return new ResponseEntity<Article>(article, HttpStatus.OK);
-    }*/
 }
