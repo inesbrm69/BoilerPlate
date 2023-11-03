@@ -26,7 +26,7 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Transient
-    private static final String SEQUENCE_NAME ="user_ sequence";
+    private static final String SEQUENCE_NAME ="user_sequence";
 
     @Id
     private int id;

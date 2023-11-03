@@ -30,13 +30,18 @@ public class ArticleController {
             return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
         }
     }
-    /*@GetMapping("{id}")
-    public ResponseEntity<Article> articles(@PathVariable("id") int id){
+    @GetMapping("{id}")
+    public ResponseEntity<? extends Object> articlesById(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" article ");
-        Article art = articles.stream().filter(article -> id == article.getId()).findAny().orElse(null);
-        return new ResponseEntity<Article>(art, HttpStatus.OK);
+        Article articles = articleService.findArticlebyId(id);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<Article>(articles, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
+        }
+
     }
-    @GetMapping("{id}/{name}")
+    /*@GetMapping("{id}/{name}")
     public ResponseEntity<Article> getArticleByIdByName(@PathVariable("id") int id, @PathVariable("name") String name){
         log.info(" article ");
         Article art = articles.stream().filter(article -> id == article.getId() && name.equals(article.getNom()))
