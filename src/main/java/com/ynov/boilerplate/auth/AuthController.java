@@ -1,12 +1,10 @@
 package com.ynov.boilerplate.auth;
 
 import com.ynov.boilerplate.entity.Article;
-import com.ynov.boilerplate.repository.ArticleRepository;
 import com.ynov.boilerplate.services.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,9 +30,13 @@ public class AuthController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
-    @GetMapping("/{token}/articles")
-    public ResponseEntity<List<Article>> getAllArticle(){
+    @GetMapping("/articles")
+    public ResponseEntity<? extends Object> getAllArticleWithToken(@RequestHeader("Authorization") String authorizationHeader){
         List<Article> articles = articleService.getAllArticle();
-        return new ResponseEntity<List<Article>>(articles, HttpStatus.OK);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<List<Article>>(articles, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
+        }
     }
 }
