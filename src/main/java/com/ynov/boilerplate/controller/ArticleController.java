@@ -3,6 +3,7 @@ package com.ynov.boilerplate.controller;
 import com.ynov.boilerplate.entity.Article;
 import com.ynov.boilerplate.services.ArticleService;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -74,22 +75,17 @@ public class ArticleController {
         }
     }
 
+    @PutMapping("update/{id:\\d+}")//Put => la modification
+    public ResponseEntity<? extends Object> updateArticle(@PathVariable("id") int id, @RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
+        log.info(" Mise à jour de l'article ");
 
-    /*@DeleteMapping("delete/{id:\\d+}")
-    public ResponseEntity<? extends Object> deleteArticle(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader) {
-        List<Article> articles = articleService.getAllArticle();
-        *//*articleService.findArticlebyId(id)t*//*
-        if (id < 0 || id >= articles.size()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Article articleToDelete = articles.remove(id);
-
-        if (articleToDelete != null && authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return new ResponseEntity<String>("L'article a bien été supprimé", HttpStatus.OK);
+        articleService.updateArticle(id, article);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<String>("L'article a bien été modifié : ", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("L'article n'a pas été supprimé. Veuillez réessayer !",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
         }
-    }*/
+    }
 
     /*@DeleteMapping("delete/{id:\\d+}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("id") int id) {

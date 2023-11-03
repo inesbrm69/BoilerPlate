@@ -6,9 +6,11 @@ import com.ynov.boilerplate.repository.ArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -45,7 +47,22 @@ public class ArticleService {
         articleRepository.deleteById(id);
     }
 
-    public void updateArticle(Article art){
-        articleRepository.save(art);
+    public Article updateArticle(int id, Article updatedArticle){
+        Optional<Article> optionalArticle = articleRepository.findById(id);
+
+        if (optionalArticle.isPresent()) {
+            Article article = optionalArticle.get();
+            // Mettez à jour les propriétés de l'article avec les nouvelles valeurs de updatedArticle
+            article.setName(updatedArticle.getName());
+            article.setPrice(updatedArticle.getPrice());
+            // Mettez à jour d'autres propriétés selon vos besoins
+
+            // Enregistrez les modifications dans la base de données
+            articleRepository.save(article);
+
+            return article; // Renvoie l'article mis à jour
+        }else{
+            return updatedArticle;
+        }
     }
 }
