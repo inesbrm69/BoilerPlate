@@ -37,9 +37,7 @@ public class ArticleService {
     }
 
     public Article findArticlebyIdAndName(int id, String name) {
-        return articleRepository
-                .findById(id)
-                .orElse(null);
+        return articleRepository.findArticleByIdAndName(id, name);
     }
 
 

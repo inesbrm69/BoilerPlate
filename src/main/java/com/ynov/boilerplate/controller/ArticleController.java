@@ -44,21 +44,28 @@ public class ArticleController {
 
     }
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Article> addArticle(@RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<? extends Object> addArticle(@RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" list article ");
         articleService.createArticle(article);
-        return new ResponseEntity<Article>(article, HttpStatus.OK);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<Article>(article, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
+        }
     }
     @GetMapping("{id}/{name}")
-    public ResponseEntity<Article> getArticleByIdByName(@PathVariable("id") int id, @PathVariable("name") String name){
+    public ResponseEntity<? extends Object> getArticleByIdByName(@PathVariable("id") int id, @PathVariable("name") String name, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" article ");
-        Article art = articles.stream().filter(article -> id == article.getId() && name.equals(article.getNom()))
-                .findAny()
-                .orElse(null);
-        return new ResponseEntity<Article>(art, HttpStatus.OK);
+        Article article = articleService.findArticlebyIdAndName(id, name);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<Article>(article, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
+        }
+
     }
 
-    @DeleteMapping("delete/{id:\\d+}")
+    /*@DeleteMapping("delete/{id:\\d+}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("id") int id) {
         // Vérifiez si l'ID est dans la plage valide des indices de la liste
         if (id < 0 || id >= articles.size()) {
@@ -100,5 +107,5 @@ public class ArticleController {
         }
 
         return new ResponseEntity<Article>(article, HttpStatus.OK);
-    }
+    }*/
 }
