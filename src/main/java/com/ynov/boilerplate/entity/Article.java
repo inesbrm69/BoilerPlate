@@ -8,25 +8,26 @@ import javax.persistence.GenerationType;
 
 @Document(collection = "Article")
 public class Article {
-   /* @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;*/
+    private int id;
     private String name;
     private int price;
 
-    public Article(String name, int price) {
-        /*this.id = id;*/
+    public Article(int id, String name, int price) {
+        this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    /*public int getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }*/
+    }
 
     public String getName() {
         return name;

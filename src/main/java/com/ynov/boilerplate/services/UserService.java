@@ -1,6 +1,5 @@
 package com.ynov.boilerplate.services;
 
-import com.ynov.boilerplate.entity.Article;
 import com.ynov.boilerplate.entity.User;
 import com.ynov.boilerplate.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +21,8 @@ public class UserService {
         userRepository.saveAll(user);
     }
 
-    public List<User> getAllUser(){
-        /*List<Article> articles = new ArrayList<>();
-        articles.add(new Article(1,"Chocolat", 25));
-        articles.add(new Article(2,"Pantalon", 45));
-        articles.add(new Article(3,"Chemise", 100));
-        return articles;*/
-        return userRepository.findAll();
-    }
-    public Optional<Article> findUserbyName(int id){
+    public List<User> getAllUser(){return userRepository.findAll();}
+    public Optional<User> findUserbyName(int id){
         return userRepository.findById(id);
     }
 
@@ -42,6 +34,5 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public
 
 }
