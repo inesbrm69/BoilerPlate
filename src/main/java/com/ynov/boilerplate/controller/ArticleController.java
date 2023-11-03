@@ -43,16 +43,6 @@ public class ArticleController {
         }
 
     }
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<? extends Object> addArticle(@RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
-        log.info(" Création d'articles ");
-        articleService.createArticle(article);
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return new ResponseEntity<String>("L'article a bien été créé : " + article, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
-        }
-    }
     @GetMapping("{id}/{name}")
     public ResponseEntity<? extends Object> getArticleByIdByName(@PathVariable("id") int id, @PathVariable("name") String name, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" article ");
@@ -64,7 +54,16 @@ public class ArticleController {
         }
 
     }
-
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<? extends Object> addArticle(@RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
+        log.info(" Création d'articles ");
+        articleService.createArticle(article);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<String>("L'article a bien été créé : " + article, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
+        }
+    }
     @DeleteMapping("delete/{id:\\d+}")
     public ResponseEntity<? extends Object> deleteArticle(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader) {
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
@@ -74,7 +73,6 @@ public class ArticleController {
             return new ResponseEntity<String>("L'article n'a pas été supprimé. Veuillez réessayer !", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @PutMapping("update/{id:\\d+}")//Put => la modification
     public ResponseEntity<? extends Object> updateArticle(@PathVariable("id") int id, @RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" Mise à jour de l'article ");
