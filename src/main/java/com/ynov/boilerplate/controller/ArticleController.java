@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/articles")
+@RequestMapping(value = "/api/v1/auth/articles")
 public class ArticleController {
     private static final Logger log = LoggerFactory.getLogger(ArticleController.class);
     private final ArticleService articleService;
@@ -22,11 +22,13 @@ public class ArticleController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Article>> articles(){
-        log.info(" -----> : tous les articles ");
+    public ResponseEntity<? extends Object> getAllArticle(@RequestHeader("Authorization") String authorizationHeader){
         List<Article> articles = articleService.getAllArticle();
-        log.info(articles.toString());
-        return new ResponseEntity<List<Article>>(articles, HttpStatus.OK);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<List<Article>>(articles, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
+        }
     }
     /*@GetMapping("{id}")
     public ResponseEntity<Article> articles(@PathVariable("id") int id){

@@ -7,14 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.awt.*;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,6 +24,10 @@ import java.util.List;
 @AllArgsConstructor
 @Document(collection = "users")
 public class User implements UserDetails {
+
+    @Transient
+    private static final String SEQUENCE_NAME ="user_ sequence";
+
     @Id
     private int id;
     private String firstname;
@@ -73,4 +75,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

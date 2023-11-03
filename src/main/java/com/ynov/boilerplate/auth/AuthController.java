@@ -29,14 +29,4 @@ public class AuthController {
     ){
         return ResponseEntity.ok(service.authenticate(request));
     }
-
-    @GetMapping("/articles")
-    public ResponseEntity<? extends Object> getAllArticleWithToken(@RequestHeader("Authorization") String authorizationHeader){
-        List<Article> articles = articleService.getAllArticle();
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return new ResponseEntity<List<Article>>(articles, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
-        }
-    }
 }
