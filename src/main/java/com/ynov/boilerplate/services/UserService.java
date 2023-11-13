@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public User findUserByIdAndFirstName(int id, String firstname) {
-        return userRepository.findUserByIdAndNAndFirstname(id, firstname);
+        return userRepository.findUserByIdAndFirstname(id, firstname);
     }
     public void deleteUserById(int id){
         userRepository.deleteById(id);
