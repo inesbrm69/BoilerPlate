@@ -16,7 +16,6 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepository articleRepository;
     private static final Logger log = LoggerFactory.getLogger(ArticleService.class);
-    @Autowired
     private final SequenceGeneratorService sequenceGeneratorService;
     @Autowired
     public ArticleService(ArticleRepository articleRepository, SequenceGeneratorService sequenceGeneratorService) {
