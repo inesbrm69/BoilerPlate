@@ -14,12 +14,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-
+    SequenceGeneratorService sequenceGeneratorService;
     @Autowired
-    private SequenceGeneratorService sequenceGeneratorService;
-    @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, SequenceGeneratorService sequenceGeneratorService) {
         this.userRepository = userRepository;
+        this.sequenceGeneratorService = sequenceGeneratorService;
     }
 
     public User createUser(User user) {
