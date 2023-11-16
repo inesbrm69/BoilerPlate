@@ -5,6 +5,8 @@ import com.ynov.boilerplate.entity.User;
 import com.ynov.boilerplate.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@EnableCaching
 @RequestMapping(value = "/api/v1/auth/users")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(ArticleController.class);
@@ -23,7 +26,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> articles() {
+    @Cacheable("users")
+    public ResponseEntity<List<User>> users() {
         log.info(" -----> : tous les utilisateurs ");
         List<User> users = userService.getAllUser();
         log.info(users.toString());
@@ -31,7 +35,8 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<? extends Object> articlesById(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader){
+    @Cacheable("userById")
+    public ResponseEntity<? extends Object> userById(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" L'utilisateur " + id + " : ");
         User user = userService.findUserbyId(id);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -42,7 +47,8 @@ public class UserController {
 
     }
     @GetMapping("{id}/{name}")
-    public ResponseEntity<? extends Object> getArticleByIdByName(@PathVariable("id") int id, @PathVariable("name") String name, @RequestHeader("Authorization") String authorizationHeader){
+    @Cacheable("userByIdAndName")
+    public ResponseEntity<? extends Object> getUserByIdByName(@PathVariable("id") int id, @PathVariable("name") String name, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" L'utilisateur "+ name + " : ");
         User user = userService.findUserByIdAndFirstName(id, name);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -53,7 +59,7 @@ public class UserController {
 
     }
     @DeleteMapping("delete/{id:\\d+}")
-    public ResponseEntity<? extends Object> deleteArticle(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<? extends Object> deleteUser(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader) {
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
             userService.deleteUserById(id);
             return new ResponseEntity<String>("L'utilisateur a bien été supprimé", HttpStatus.OK);
@@ -62,7 +68,7 @@ public class UserController {
         }
     }
     @PutMapping("update/{id:\\d+}")//Put => la modification
-    public ResponseEntity<? extends Object> updateArticle(@PathVariable("id") int id, @RequestBody User user, @RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<? extends Object> updateUser(@PathVariable("id") int id, @RequestBody User user, @RequestHeader("Authorization") String authorizationHeader){
         log.info(" Mise à jour de l'utilisateur ");
 
         userService.updateUser(id, user);
