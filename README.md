@@ -7,7 +7,13 @@
 ```
     cd C:\Program Files\MongoDB\Server\7.0\bin
 ```
-        .\mongod.exe --dbpath .\data
+````
+    .\mongod.exe --dbpath .\data
+````
+### Les fichiers de données de la base de données (MongoDB) se situe dans le dossier
+````
+    resources/mongodb/todolist
+````
 ### Pour créer un utilisateur
 l'URL : http://localhost:8080/api/v1/auth/register
 ````
