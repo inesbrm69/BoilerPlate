@@ -1,0 +1,16 @@
+[{
+  "_id": 1,
+  "name": "PC",
+  "price": 2000,
+  "_class": "com.ynov.boilerplate.entity.Article"
+},{
+  "_id": 2,
+  "name": "Lunettes",
+  "price": 500,
+  "_class": "com.ynov.boilerplate.entity.Article"
+},{
+  "_id": 3,
+  "name": "Gourde",
+  "price": 35,
+  "_class": "com.ynov.boilerplate.entity.Article"
+}]

@@ -1,8 +1,6 @@
 package com.ynov.boilerplate.repository;
 
-import com.ynov.boilerplate.entity.Article;
 import com.ynov.boilerplate.entity.User;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

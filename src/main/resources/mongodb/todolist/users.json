@@ -1,0 +1,9 @@
+[{
+  "_id": 1,
+  "firstname": "ines",
+  "lastname": "bourhim",
+  "email": "inesbrm1",
+  "password": "$2a$10$ZGU2gSGeMP.1AAVCZB1X0e63DpVVpeCYax05kanmzkS6k88Jp/Fau",
+  "roles": "USER",
+  "_class": "com.ynov.boilerplate.entity.User"
+}]
