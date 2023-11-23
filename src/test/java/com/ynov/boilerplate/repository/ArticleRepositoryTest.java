@@ -13,11 +13,6 @@ class ArticleRepositoryTest {
 
     @Autowired
     private ArticleRepository underTest;
-
-    @AfterEach
-    void tearDown(){
-        underTest.deleteAll();
-    }
     @Test
     void itShouldCheckWhenArticleExistsByIdAndName() {
         //given
