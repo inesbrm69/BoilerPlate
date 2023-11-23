@@ -1,13 +1,9 @@
 package com.ynov.boilerplate.auth;
 
-import com.ynov.boilerplate.entity.Article;
 import com.ynov.boilerplate.services.ArticleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -17,7 +13,7 @@ public class AuthController {
     private final AuthService service;
     private final ArticleService articleService;
     @PostMapping("/register")
-    public ResponseEntity<AuthentificationResponse> register(
+    public ResponseEntity<String> register(
             @RequestBody RegisterRequest request
     ){
        return ResponseEntity.ok(service.register(request));

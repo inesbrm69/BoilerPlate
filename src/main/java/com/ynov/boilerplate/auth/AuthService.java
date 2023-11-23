@@ -20,7 +20,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-    public AuthentificationResponse register(RegisterRequest request) {
+    public String register(RegisterRequest request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -28,12 +28,12 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(Roles.USER)
                 .build();
+
         service.createUser(user);
         /*repository.save(user);*/
-        var jwtToken = jwtService.generateToken(user);
-        return AuthentificationResponse.builder()
-                .token(jwtToken)
-                .build();
+
+        // Vous pouvez personnaliser le message ci-dessous selon vos besoins
+        return "L'utilisateur a été sauvegardé avec succès.";
     }
 
     public AuthentificationResponse authenticate(AuthenticationRequest request) {
