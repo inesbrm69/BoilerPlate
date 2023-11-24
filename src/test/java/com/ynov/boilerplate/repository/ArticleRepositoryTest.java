@@ -14,7 +14,7 @@ class ArticleRepositoryTest {
     @Autowired
     private ArticleRepository underTest;
     @Test
-    void itShouldCheckWhenArticleExistsByIdAndName() {
+    void itShouldCheckIfArticleExistsByIdAndName() {
         //given
         Article article = new Article(
                 5,
@@ -24,21 +24,21 @@ class ArticleRepositoryTest {
         underTest.save(article);
 
         //when
-        boolean expected = underTest.doesArticleExist(5, "Lunettes");
+        boolean doesExist = underTest.doesArticleExist(5, "Lunettes");
 
         //then
-        assertThat(expected).isTrue();
+        assertThat(doesExist).isTrue();
     }
 
     @Test
-    void itShouldCheckWhenArticleNameDoesNotExists() {
+    void itShouldCheckIfArticleNameDoesNotExist() {
         //given
         String name = "Cahier";
 
         //when
-        boolean expected = underTest.doesArticleExistByName(name);
+        boolean doesExist = underTest.doesArticleExistByName(name);
 
         //then
-        assertThat(expected).isFalse();
+        assertThat(doesExist).isFalse();
     }
 }

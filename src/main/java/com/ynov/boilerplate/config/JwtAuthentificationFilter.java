@@ -18,6 +18,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Filtre d'authentification JWT pour valider et extraire les informations d'authentification des jetons JWT.
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthentificationFilter extends OncePerRequestFilter {
@@ -25,6 +28,15 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Filtre les requêtes entrantes pour extraire et valider les informations d'authentification du jeton JWT.
+     *
+     * @param request     La requête HTTP entrante.
+     * @param response    La réponse HTTP à renvoyer.
+     * @param filterChain Le filtre suivant dans la chaîne.
+     * @throws ServletException Si une exception liée au traitement de la requête se produit.
+     * @throws IOException      Si une exception d'entrée/sortie se produit.
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

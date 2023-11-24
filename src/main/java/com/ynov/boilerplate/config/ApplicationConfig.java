@@ -19,18 +19,31 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Configuration de l'application, notamment la configuration de l'authentification et du chiffrement des mots de passe.
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
     private final UserRepository repository;
 
+    /**
+     * Crée un service pour charger les informations de l'utilisateur à partir de la base de données.
+     *
+     * @return Un service UserDetailsService basé sur la recherche par e-mail dans la base de données.
+     */
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> (UserDetails) repository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    /**
+     * Crée un fournisseur d'authentification DAO utilisant le service UserDetailsService et un encodeur de mot de passe.
+     *
+     * @return Un AuthenticationProvider basé sur DaoAuthenticationProvider.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -39,11 +52,23 @@ public class ApplicationConfig {
         return authenticationProvider;
     }
 
+    /**
+     * Crée un encodeur de mot de passe BCrypt.
+     *
+     * @return Un PasswordEncoder basé sur BCryptPasswordEncoder.
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Crée un gestionnaire d'authentification en utilisant la configuration d'authentification fournie.
+     *
+     * @param config La configuration d'authentification.
+     * @return Un AuthenticationManager basé sur la configuration d'authentification fournie.
+     * @throws Exception Si une exception se produit lors de la création du gestionnaire d'authentification.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return  config.getAuthenticationManager();

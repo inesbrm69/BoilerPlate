@@ -15,6 +15,9 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
+/**
+ * Contrôleur REST responsable de la gestion des articles.
+ */
 @RestController
 @EnableCaching
 @RequestMapping(value = "/api/v1/auth/articles")
@@ -26,6 +29,12 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
+    /**
+     * Récupère la liste de tous les articles.
+     *
+     * @param authorizationHeader Le jeton d'authentification dans l'en-tête de la requête.
+     * @return Une ResponseEntity contenant la liste des articles ou un message d'erreur d'authentification.
+     */
     @GetMapping()
     @Cacheable("articles")
     public ResponseEntity<? extends Object> getAllArticle(@RequestHeader("Authorization") String authorizationHeader){
@@ -36,6 +45,14 @@ public class ArticleController {
             return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
         }
     }
+
+    /**
+     * Récupère un article en fonction de son identifiant.
+     *
+     * @param id                 L'identifiant de l'article à récupérer.
+     * @param authorizationHeader Le jeton d'authentification dans l'en-tête de la requête.
+     * @return Une ResponseEntity contenant l'article trouvé ou un message d'erreur d'authentification.
+     */
     @GetMapping("{id}")
     @Cacheable("articlesById")
     public ResponseEntity<? extends Object> articlesById(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader){
@@ -48,6 +65,15 @@ public class ArticleController {
         }
 
     }
+
+    /**
+     * Récupère un article en fonction de son identifiant et de son nom.
+     *
+     * @param id                 L'identifiant de l'article à récupérer.
+     * @param name               Le nom de l'article à récupérer.
+     * @param authorizationHeader Le jeton d'authentification dans l'en-tête de la requête.
+     * @return Une ResponseEntity contenant l'article trouvé ou un message d'erreur d'authentification.
+     */
     @GetMapping("{id}/{name}")
     @Cacheable("articlesByIdAndName")
     public ResponseEntity<? extends Object> getArticleByIdByName(@PathVariable("id") int id, @PathVariable("name") String name, @RequestHeader("Authorization") String authorizationHeader){
@@ -60,6 +86,14 @@ public class ArticleController {
         }
 
     }
+
+    /**
+     * Ajoute un nouvel article.
+     *
+     * @param article            L'article à ajouter.
+     * @param authorizationHeader Le jeton d'authentification dans l'en-tête de la requête.
+     * @return Une ResponseEntity indiquant si l'ajout a réussi ou un message d'erreur d'authentification.
+     */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Cacheable("createArticles")
     public ResponseEntity<? extends Object> addArticle(@RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
@@ -71,6 +105,14 @@ public class ArticleController {
             return new ResponseEntity<String>("Token manquant ou invalide", HttpStatus.UNAUTHORIZED);
         }
     }
+
+    /**
+     * Supprime un article en fonction de son identifiant.
+     *
+     * @param id                 L'identifiant de l'article à supprimer.
+     * @param authorizationHeader Le jeton d'authentification dans l'en-tête de la requête.
+     * @return Une ResponseEntity indiquant si la suppression a réussi ou un message d'erreur d'authentification.
+     */
     @DeleteMapping("delete/{id:\\d+}")
     @Cacheable("deleteArticles")
     public ResponseEntity<? extends Object> deleteArticle(@PathVariable("id") int id, @RequestHeader("Authorization") String authorizationHeader) {
@@ -81,6 +123,15 @@ public class ArticleController {
             return new ResponseEntity<String>("L'article n'a pas été supprimé. Veuillez réessayer !", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Met à jour les informations d'un article existant.
+     *
+     * @param id                 L'identifiant de l'article à mettre à jour.
+     * @param article            Les nouvelles informations à utiliser pour la mise à jour.
+     * @param authorizationHeader Le jeton d'authentification dans l'en-tête de la requête.
+     * @return Une ResponseEntity indiquant si la mise à jour a réussi ou un message d'erreur d'authentification.
+     */
     @PutMapping("update/{id:\\d+}")//Put => la modification
     @Cacheable("updateArticles")
     public ResponseEntity<? extends Object> updateArticle(@PathVariable("id") int id, @RequestBody Article article, @RequestHeader("Authorization") String authorizationHeader){
